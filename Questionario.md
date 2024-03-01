@@ -1,10 +1,10 @@
 # Questionário Sistemas Embarcados I
 
 ## 1. Explique brevemente o que é compilação cruzada (***cross-compiling***) e para que ela serve.
-	Cross compilation é o processo de compilação de um código por meio de um sistema diferente daquele que executará o programa. Ela serve para se criar programas destinados a diferentes dispositivos que não possuem a capacidade de gerar softwares. Desse modo, é por esse processo que se utiliza computadores para criação de códigos de muitos sistemas embarcados, permitindo a compilação de tais programas para as arquiteturas específicas de cada dispositivo.
+Cross compilation é o processo de compilação de um código por meio de um sistema diferente daquele que executará o programa. Ela serve para se criar programas destinados a diferentes dispositivos que não possuem a capacidade de gerar softwares. Desse modo, é por esse processo que se utiliza computadores para criação de códigos de muitos sistemas embarcados, permitindo a compilação de tais programas para as arquiteturas específicas de cada dispositivo.
 
 ## 2. O que é um código de inicialização ou ***startup*** e qual sua finalidade?
-    Um código de inicialização ou startup é o programa executado logo ao se iniciar um sistema embarcado que tem como objetivo preparar o ambiente de execução do dispositivo para que ele possa funcionar corretamente e como desejado. Dentre algumas funções desse código estão a inicialização do stack, onde serão armazenados os dados do programa, dos vetores de interrupção, da área de armazenamento da memória Ram e todas as outras configurações necessárias para que a função main do código possa ser chamada e o programa iniciar sua execução.
+Um código de inicialização ou startup é o programa executado logo ao se iniciar um sistema embarcado que tem como objetivo preparar o ambiente de execução do dispositivo para que ele possa funcionar corretamente e como desejado. Dentre algumas funções desse código estão a inicialização do stack, onde serão armazenados os dados do programa, dos vetores de interrupção, da área de armazenamento da memória Ram e todas as outras configurações necessárias para que a função main do código possa ser chamada e o programa iniciar sua execução.
 
 ## 3. Sobre o utilitário **make** e o arquivo **Makefile responda**:
 
@@ -32,9 +32,11 @@ A sintaxe para criar um novo target é:
 
 #### (e) O que são as regras do **Makefile**, qual a diferença entre regras implícitas e explícitas?
 Regras são as instruções escritas no Makefile para a criação de um target. Regras implícitas são aquelas predefinidas que geralmente possuem uma forma genérica usada para criação de vários targets similares. Um exemplo de regra implícita seria:
+
 	%.o: %.c
 	         arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb $< -o $@
 Na regra acima qualquer aquivo .c será compilado para um aquivo .o, sendo genérica para criação de diferentes targets, e portanto, uma regra implícita. Já as regras explicitas, são aquelas usadas para criar um target específico como por exemplo:
+
 main.o: main.c
 		arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb main.c -o main.o
 
