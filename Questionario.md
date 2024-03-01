@@ -34,10 +34,10 @@ A sintaxe para criar um novo target é:
 Regras são as instruções escritas no Makefile para a criação de um target. Regras implícitas são aquelas predefinidas que geralmente possuem uma forma genérica usada para criação de vários targets similares. Um exemplo de regra implícita seria:
 
 	%.o: %.c
-	         arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb $< -o $@
+	    arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb $< -o $@
 Na regra acima qualquer aquivo .c será compilado para um aquivo .o, sendo genérica para criação de diferentes targets, e portanto, uma regra implícita. Já as regras explicitas, são aquelas usadas para criar um target específico como por exemplo:
 
-main.o: main.c
+    main.o: main.c
 		arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb main.c -o main.o
 
 
