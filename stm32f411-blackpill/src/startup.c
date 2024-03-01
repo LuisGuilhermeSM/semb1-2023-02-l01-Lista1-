@@ -40,6 +40,70 @@ void svc_handler       (void) __attribute__ ((weak, alias("default_handler")));
 void debugmon_handler  (void) __attribute__ ((weak, alias("default_handler")));
 void pendsv_handler    (void) __attribute__ ((weak, alias("default_handler")));
 void systick_handler   (void) __attribute__ ((weak, alias("default_handler")));
+void WWDG              (void) __attribute__ ((weak, alias("default_handler")));
+void pvd_irqhandler                (void) __attribute__ ((weak, alias("default_handler")));
+void tamp_stamp_irqhandler         (void) __attribute__ ((weak, alias("default_handler")));
+void rtc_wkup_irqhandler           (void) __attribute__ ((weak, alias("default_handler")));
+void flash_irqhandler              (void) __attribute__ ((weak, alias("default_handler")));
+void rcc_irqhandler                (void) __attribute__ ((weak, alias("default_handler")));
+void exti0_irqhandler              (void) __attribute__ ((weak, alias("default_handler")));
+void exti1_irqhandler              (void) __attribute__ ((weak, alias("default_handler")));
+void exti2_irqhandler              (void) __attribute__ ((weak, alias("default_handler")));
+void exti3_irqhandler              (void) __attribute__ ((weak, alias("default_handler")));
+void exti4_irqhandler              (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream0_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream1_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream2_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream3_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream4_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream5_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream6_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void adc_irqhandler                (void) __attribute__ ((weak, alias("default_handler")));
+void exti9_5_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_brk_tim9_irqhandler      (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_up_tim10_irqhandler      (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_trg_com_tim11_irqhandler (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_cc_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void tim2_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void tim3_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void tim4_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void i2c1_ev_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void i2c1_er_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void i2c2_ev_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void i2c2_er_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void spi1_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void spi2_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void usart1_irqhandler             (void) __attribute__ ((weak, alias("default_handler")));
+void usart2_irqhandler             (void) __attribute__ ((weak, alias("default_handler")));
+void exti15_10_irqhandler          (void) __attribute__ ((weak, alias("default_handler")));
+void rtc_alarm_irqhandler          (void) __attribute__ ((weak, alias("default_handler")));
+void otg_fs_wkup_irqhandler        (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream7_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void sdio_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void tim5_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void spi3_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream0_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream1_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream2_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream3_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream4_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void otg_fs_irqhandler             (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream5_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream6_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void dma2_stream7_irqhandler       (void) __attribute__ ((weak, alias("default_handler")));
+void usart6_irqhandler             (void) __attribute__ ((weak, alias("default_handler")));
+void i2c3_ev_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void i2c3_er_irqhandler            (void) __attribute__ ((weak, alias("default_handler")));
+void fpu_irqhandler                (void) __attribute__ ((weak, alias("default_handler")));
+void spi4_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+void spi5_irqhandler               (void) __attribute__ ((weak, alias("default_handler")));
+
+/* atributo alias("defdault_handler") faz com que a função funcione como um apelido da função default_handler escrita no código como uma função padrão. Assim 
+ao se chamar uma das funções abaixo se estaria chamando a função default_handler na verdade. Esse atributo resolve o problema de termos de criar uma instrução
+de tratamento para cada interrupção, mesmo se ela não fosse utilizada.
+Agora o atributo weak faz com que a função possa ser sobrescrita durante o processo de linking(linkagem) por outra função com o mesmo nome e sem o atributo weak,
+de modo que, é possível alterar essas funções em outro arquivo .c (como a main.c) sem ter que alterar diretamente no arquivo startup.c
+*/
 
  /****************************************************************************
  * External Data
@@ -60,6 +124,9 @@ extern uint32_t _ebss;      /* Fim da secao .bss */
 
 /* Tabela de Vetores de Interrupção */
 
+/* o __attribute__((section(".isr_vectors"))) faz com qur este vetor ao ser compilado seja armazenado numa seção específica criada e chamada de .isr_vectors
+ para que depois o linker aloque esse vetor no início da memória Flash. A diretiva sections é exclusiva do GCC*/
+
 uint32_t vectors[] __attribute__((section(".isr_vectors"))) =
 {
   STACK_START,                            /* 0x0000 0000 */
@@ -78,7 +145,94 @@ uint32_t vectors[] __attribute__((section(".isr_vectors"))) =
   0,                                      /* 0x0000 0034 */
   (uint32_t)pendsv_handler,               /* 0x0000 0038 */
   (uint32_t)systick_handler,              /* 0x0000 003c */
+  (uint32_t)WWDG,                          /* 0x0000 0040 */
+  (uint32_t)pvd_irqhandler,               /* 0x0000 0044 */
+  (uint32_t)tamp_stamp_irqhandler,        /* 0x0000 0048 */  
+  (uint32_t)rtc_wkup_irqhandler,          /* 0x0000 004C */
+  (uint32_t)flash_irqhandler,             /* 0x0000 0050 */
+  (uint32_t)rcc_irqhandler,               /* 0x0000 0054 */
+  (uint32_t)exti0_irqhandler,             /* 0x0000 0058 */
+  (uint32_t)exti1_irqhandler,             /* 0x0000 005C */
+  (uint32_t)exti2_irqhandler,             /* 0x0000 0060 */
+  (uint32_t)exti3_irqhandler,             /* 0x0000 0064 */
+  (uint32_t)exti4_irqhandler,             /* 0x0000 0068 */
+  (uint32_t)dma1_stream0_irqhandler,      /* 0x0000 006C */
+  (uint32_t)dma1_stream1_irqhandler,      /* 0x0000 0070 */
+  (uint32_t)dma1_stream2_irqhandler,      /* 0x0000 0074 */
+  (uint32_t)dma1_stream3_irqhandler,      /* 0x0000 0078 */
+  (uint32_t)dma1_stream4_irqhandler,      /* 0x0000 007C */
+  (uint32_t)dma1_stream5_irqhandler,      /* 0x0000 0080 */
+  (uint32_t)dma1_stream6_irqhandler,      /* 0x0000 0084 */
+  (uint32_t)adc_irqhandler,               /* 0x0000 0088 */
+  0,                                      /* 0x0000 008C */ // No manual há endereços que são pulados
+  0,                                      /* 0x0000 0090 */
+  0,                                      /* 0x0000 0094 */
+  0,                                      /* 0x0000 0098 */
+  (uint32_t)exti9_5_irqhandler,           /* 0x0000 009C */
+  (uint32_t)tim1_brk_tim9_irqhandler,     /* 0x0000 00A0 */
+  (uint32_t)tim1_up_tim10_irqhandler,     /* 0x0000 00A4 */
+  (uint32_t)tim1_trg_com_tim11_irqhandler,/* 0x0000 00A8 */
+  (uint32_t)tim1_cc_irqhandler,           /* 0x0000 00AC */
+  (uint32_t)tim2_irqhandler,              /* 0x0000 00B0 */
+  (uint32_t)tim3_irqhandler,              /* 0x0000 00B4 */
+  (uint32_t)tim4_irqhandler,              /* 0x0000 00B8 */
+  (uint32_t)i2c1_ev_irqhandler,           /* 0x0000 00BC */
+  (uint32_t)i2c1_er_irqhandler,           /* 0x0000 00C0 */
+  (uint32_t)i2c2_ev_irqhandler,           /* 0x0000 00C4 */
+  (uint32_t)i2c2_er_irqhandler,           /* 0x0000 00C8 */
+  (uint32_t)spi1_irqhandler,              /* 0x0000 00CC */
+  (uint32_t)spi2_irqhandler,              /* 0x0000 00D0 */
+  (uint32_t)usart1_irqhandler,            /* 0x0000 00D4 */
+  (uint32_t)usart2_irqhandler,            /* 0x0000 00D8 */
+  0,                                      /* 0x0000 00DC */
+  (uint32_t)exti15_10_irqhandler,         /* 0x0000 00E0 */
+  (uint32_t)rtc_alarm_irqhandler,         /* 0x0000 00E4 */
+  (uint32_t)otg_fs_wkup_irqhandler,       /* 0x0000 00E8 */
+  0,                                      /* 0x0000 00EC */
+  0,                                      /* 0x0000 00F0 */
+  0,                                      /* 0x0000 00F4 */
+  0,                                      /* 0x0000 00F8 */
+  (uint32_t)dma1_stream7_irqhandler,      /* 0x0000 00FC */
+  0,                                      /* 0x0000 0100 */
+  (uint32_t)sdio_irqhandler,              /* 0x0000 0104 */
+  (uint32_t)tim5_irqhandler,              /* 0x0000 0108 */
+  (uint32_t)spi3_irqhandler,              /* 0x0000 010C */   
+  0,       
+  0,       
+  0,    
+  0,        
+  (uint32_t)dma2_stream0_irqhandler,      /* 0x0000 0120 */
+  (uint32_t)dma2_stream1_irqhandler,      /* 0x0000 0124 */
+  (uint32_t)dma2_stream2_irqhandler,      /* 0x0000 0128 */
+  (uint32_t)dma2_stream3_irqhandler,      /* 0x0000 012C */
+  (uint32_t)dma2_stream4_irqhandler,      /* 0x0000 0130 */
+  0,                                      /* 0x0000 0134 */
+  0,                                      /* 0x0000 0138 */
+  0,                                      /* 0x0000 013C */
+  0,                                      /* 0x0000 0140 */
+  0,                                      /* 0x0000 0144 */
+  0,                                      /* 0x0000 0148 */
+  (uint32_t)otg_fs_irqhandler,            /* 0x0000 014C */
+  (uint32_t)dma2_stream5_irqhandler,      /* 0x0000 0150 */
+  (uint32_t)dma2_stream6_irqhandler,      /* 0x0000 0154 */
+  (uint32_t)dma2_stream7_irqhandler,      /* 0x0000 0158 */
+  (uint32_t)usart6_irqhandler,            /* 0x0000 015C */
+  (uint32_t)i2c3_ev_irqhandler,           /* 0x0000 0160 */
+  (uint32_t)i2c3_er_irqhandler,           /* 0x0000 0164 */
+  0,                                      /* 0x0000 0168 */
+  0,                                      /* 0x0000 016C */
+  0,                                      /* 0x0000 0170 */
+  0,                                      /* 0x0000 0174 */
+  0,                                      /* 0x0000 0178 */
+  0,                                      /* 0x0000 017C */
+  0,                                      /* 0x0000 0180 */
+  (uint32_t)fpu_irqhandler,               /* 0x0000 0184 */
+  0,                                      /* 0x0000 0188 */
+  0,                                      /* 0x0000 018C */
+  (uint32_t)spi4_irqhandler,              /* 0x0000 0190 */
+  (uint32_t)spi5_irqhandler,              /* 0x0000 0194 */
 };
+
 
 /****************************************************************************
  * Private Functions

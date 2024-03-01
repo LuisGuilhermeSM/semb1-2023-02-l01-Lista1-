@@ -1,6 +1,7 @@
 # Questionário Sistemas Embarcados I
 
 ## 1. Explique brevemente o que é compilação cruzada (***cross-compiling***) e para que ela serve.
+	Cross compilation é o processo de compilação de um código por meio de um sistema diferente daquele que executará o programa. Ela serve para se criar programas destinados a diferentes dispositivos que não possuem a capacidade de gerar softwares. Desse modo, é por esse processo que se utiliza computadores para criação de códigos de muitos sistemas embarcados, permitindo a compilação de tais programas para as arquiteturas específicas de cada dispositivo.
 
 ## 2. O que é um código de inicialização ou ***startup*** e qual sua finalidade?
 
