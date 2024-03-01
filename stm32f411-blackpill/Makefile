@@ -35,7 +35,7 @@ $(shell mkdir -p $(dir $(OBJS)) > /dev/null)
 
 all: $(OBJS)
 
-$(OBJSDIR)/%.o: %.c $(DEPDIR)/%.d
+$(OBJSDIR)/%.o: src/%.c $(DEPDIR)/%.d
 	$(CC) -c $(CFLAGS) $(DEPFLAGS) $< -o $@
 
 
