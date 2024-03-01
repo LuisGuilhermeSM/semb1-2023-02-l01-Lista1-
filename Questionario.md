@@ -12,21 +12,22 @@ Um código de inicialização ou startup é o programa executado logo ao se inic
 Makefile é um arquivo desenvolvido para implementação padrão no Linux e macOS, que contém instruções que realizarão a compilação automática de um outro programa e suas bibliotecas. Desse modo, o makefile serve para tornar o processo de compilação mais rápido e usual.
 
 #### (b) Descreva brevemente o processo realizado pelo utilitário **make** para compilar um programa.
+O processo se inicia com o make fazendo a leitura do código makefile e checando se os targets do programa estão desatualizados quanto aos seus pre-requisitos. Os targets são considerados desatuailizados caso não existam ou tenham data de criação anterior a última data de alteração de qualquer um de seus pre-requisitos. Assim, caso o target esteja desatualizado o make executa a regra vinculada a esse target, a qual permite a construção ou atualização desse target usando como base seus arquivos de pre-requisitos.
 
 #### (c) Qual é a sintaxe utilizada para criar um novo **target**?
 A sintaxe para criar um novo target é:
       targets: prerequisitos
-                    recipe
+            recipe
 
       Exemplo:
       main.o: main.c
-	arm-none-eabi-gcc -c -g -mcpu=cortex-m4 -mthumb -O0 -Wall main.c -o main.o
+	        arm-none-eabi-gcc -c -g -mcpu=cortex-m4 -mthumb -O0 -Wall main.c -o main.o
 
-      Onde main.o é o target (arquivo que será gerado), main.c o prerequisito (arquivo necessário para gerar o target main.o) e a linha de baixo a regra que no caso gera o arquivo de compilação main.o.
+Onde main.o é o target (arquivo que será gerado), main.c o prerequisito (arquivo necessário para gerar o target main.o) e a linha de baixo a regra que no caso gera o arquivo de compilação main.o.
 
 
 #### (d) Como são definidas as dependências de um **target**, para que elas são utilizadas?
-  As dependências são definidas pela sintaxe, targets: dependências, ou seja, na declaração do target. Elas são utilizadas para apresentar quais arquivos serão necessários para se gerar o target. Além disso, por meio da checagem da data da última alteração dos arquivos de dependência o make observa se o arquivo target gerado é mais antigo que tal modificação e caso seja o reconstrói, ou caso ele não existisse, o arquivo target é gerado da mesma forma seguindo os comandos associados a ele no Makefile.
+As dependências são definidas pela sintaxe, targets: dependências, ou seja, na declaração do target. Elas são utilizadas para apresentar quais arquivos serão necessários para se gerar o target. Além disso, por meio da checagem da data da última alteração dos arquivos de dependência o make observa se o arquivo target gerado é mais antigo que tal modificação e caso seja o reconstrói, ou caso ele não existisse, o arquivo target é gerado da mesma forma seguindo os comandos associados a ele no Makefile.
 
 
 
@@ -73,7 +74,7 @@ A tabela de vetores de interrupção é uma região da memória que armazena os 
 Ele serve para gerenciar e controlar as interrupções e exceções, determinado a habilitação e ordem de execução destas por meio dos níveis de prioridades atribuídas a cada uma. Desse modo, ele pode ser usado em aplicações de tempo real ao controlar por exemplo a ordem das interrupções causadas devido a fatores externos pela sua ordem de prioridade.
 
 ### (j) Em modo de execução normal, o Cortex-M pode fazer uma chamada de função usando a instrução **BL**, que muda o **PC** para o endereço de destino e salva o ponto de execução atual no registador **LR**. Ao final da função, é possível recuperar esse contexto usando uma instrução **BX LR**, por exemplo, que atualiza o **PC** para o ponto anterior. No entanto, quando acontece uma interrupção, o **LR** é preenchido com um valor completamente  diferente,  chamado  de  **EXC_RETURN**.  Explique  o  funcionamento  desse  mecanismo  e especifique como o **Cortex-M** consegue fazer o retorno da interrupção. 
-Ocorrida a interrupção o Link Register será preenchido com o valor EXC_RETURN, o qual apresentará as condições atuais do processador. Assim, quando a interrupção for finalizada é por meio destas informações que o processador volta a atuar no seu contexto anterior de funcionamento.
+Ocorrida a interrupção o Link Register será preenchido com o valor EXC_RETURN, o qual apresentará as condições atuais do processador, como o contexto da pilha, incluindo, o modo de exceção original e o estado dos registradores salvos durante a entrada na interrupção. Assim, quando a interrupção for finalizada é por meio destas informações que o processador volta a atuar no seu contexto anterior de funcionamento.
 
 ### (k) Qual  a  diferença  no  salvamento  de  contexto,  durante  a  chegada  de  uma  interrupção,  entre  os processadores Cortex-M3 e Cortex M4F (com ponto flutuante)? Descreva em termos de tempo e também de uso da pilha. Explique também o que é ***lazy stack*** e como ele é configurado. 
 O córtex M4F por ter suporte a ponto flutuante salva alguns registros específicos e status dessa funcionalidade no stack quando ocorre uma interrupção ou exceção, junto com o contexto tradicional geral do processador (Alguns outros registradores e o Link Register). Já para o córtex M3 os registros específicos para ponto flutuante não seriam salvos pois tal modelo não possui suporte para float e apenas o contexto tradicional seria armazenado. Desse modo, o salvamento do contexto para o córtex M4f demanda um maior tempo e uso da memória do stack em comparação ao córtex M3. Lazy stack é uma configuração em que o contexto de ponto flutuante só será salvo no stack caso a interrupção a ser tratada usar valores de ponto flutuante. O Lazy Stack é configurado pelo registrador FPCCR sendo que se os bits 31 (nomeado ASPEN) e 30 (nomeado LSPEN) estiverem em 1 isso significa que o lazy stack está ativado.
